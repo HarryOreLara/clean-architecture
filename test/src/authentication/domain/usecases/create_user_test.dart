@@ -26,26 +26,26 @@ void main() {
   const params = CreateUserParams.empty();
 
   test('Should call the [Repository - createUser]', () async {
-
-    
     //Arrange
+    //STUB
     when(() => authenticationRepository.createUser(
             createdAt: any(named: 'createdAt'),
             name: any(named: 'name'),
             avatar: any(named: 'avatar')))
         .thenAnswer((invocation) async => const Right(null));
 
-
-
     //Act
     final result = await usecase(params);
-
 
     //Assert
     expect(result, equals(const Right<Failure, void>(null)));
     verify(
       () => authenticationRepository.createUser(
-          createdAt: 'createdAt', name: 'name', avatar: 'avatar'),
-    );
+          createdAt: params.createdAt,
+          name: params.name,
+          avatar: params.avatar),
+    ).called(1);
+
+    verifyNoMoreInteractions(authenticationRepository);
   });
 }
