@@ -41,4 +41,13 @@ class UserModel extends User {
       {'id': id, 'avatar': avatar, 'createdAt': createdAt, 'name': name};
 
   String toJson() => jsonEncode(toMap());
+
+
+
+  // UserModel userModelFromJson(String source) {
+  //   final Map<String, dynamic> jsonData = jsonDecode(source);
+  //   return UserModel.fromMap(jsonData);
+  // }
+
+
 }
