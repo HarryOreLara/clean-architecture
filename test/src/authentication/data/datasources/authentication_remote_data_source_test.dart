@@ -84,5 +84,22 @@ void main() {
           .called(1);
       verifyNoMoreInteractions(client);
     });
+
+    test('Should throw [APIException] when the status code is not 200',
+        () async {
+      const tMessage = 'Server down, Server';
+
+      when(() => client.get(any()))
+          .thenAnswer((_) async => http.Response(tMessage, 500));
+
+      final methodCall = authenticationRemoteDataSource.getUsers;
+
+      expect(() => methodCall(),
+          throwsA(const APIException(message: tMessage, statusCode: 500)));
+
+      verify(() => client.get(Uri.https(kBaseUrl, kGetUsersEndpoint)))
+          .called(1);
+      verifyNoMoreInteractions(client);
+    });
   });
 }
